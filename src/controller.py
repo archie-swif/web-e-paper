@@ -1,10 +1,9 @@
 from flask import Flask, request
 from PIL import Image
 import io
-import numpy as np
 
 from display import Display
-from lib.waveshare_epd import epd7in5b_V2
+from waveshare_epd import epd7in5b_V2
 
 app = Flask(__name__)
 display = Display(epd7in5b_V2)
