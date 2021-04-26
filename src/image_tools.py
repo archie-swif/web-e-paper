@@ -1,5 +1,5 @@
 import numpy as np
-from PIL.Image import Image
+from PIL import Image
 
 
 def split_to_colors(image):
