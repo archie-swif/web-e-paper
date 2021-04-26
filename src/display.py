@@ -22,6 +22,7 @@ class Display:
 
     def show_on_hardware(self, image: Image.Image):
         epd = self.waveshare_api.EPD()
+        epd.init()
         black_image, color_image = split_to_colors(image)
 
         epd.display(epd.getbuffer(black_image), epd.getbuffer(color_image))
