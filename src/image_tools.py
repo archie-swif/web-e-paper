@@ -9,9 +9,9 @@ def split_to_colors(image):
     color_image = (red > 10) | (green > 10) & (blue < 10)
     color_data = data.copy()
     color_data[color_image] = [255, 255, 255]
-    color_image = Image.fromarray(color_data)
+    color_image = Image.fromarray(color_data).convert(mode="1")
 
     black_mask = (red < 10) & (green < 10) & (blue < 10)
     data[black_mask] = [255, 255, 255]
-    black_image = Image.fromarray(data)
+    black_image = Image.fromarray(data).convert(mode="1")
     return black_image, color_image
