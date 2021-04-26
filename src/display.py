@@ -15,17 +15,16 @@ class Display:
         self.waveshare_api = waveshare_api
 
     def show_on_software(self, image: Image.Image):
-        image.show()
+        black_image, color_image = split_to_colors(image)
+        image.show(title='original')
+        black_image.show(title='black')
+        color_image.show(title='color')
 
     def show_on_hardware(self, image: Image.Image):
         epd = self.waveshare_api.EPD()
-        logger.info("Init and Clear")
-        epd.init()
-        epd.Clear()
+        black_image, color_image = split_to_colors(image)
 
-        black_image, red_image = split_to_colors(image)
-
-        epd.display(epd.getbuffer(black_image), epd.getbuffer(red_image))
+        epd.display(epd.getbuffer(black_image), epd.getbuffer(color_image))
 
         logging.info("Zzzz...")
         epd.sleep()
