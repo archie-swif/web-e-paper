@@ -1,0 +1,6 @@
+numpy
+Pillow
+Flask
+RPi.GPIO
+spidev
+pytest
