@@ -3,10 +3,10 @@ from flask import Flask, request
 import io
 
 from display import Display
-from waveshare_epd import epd7in5b_V2
+from waveshare_epd import epd2in13bc
 
 app = Flask(__name__)
-display = Display(epd7in5b_V2)
+display = Display(epd2in13bc)
 
 
 @app.route('/image', methods=['POST'])
@@ -17,7 +17,7 @@ def upload_image():
         file = file.convert(mode="RGB", dither=False)
         image = Image.new('RGB', (212, 104), (0, 0, 0))  # 255: clear the frame
         image.paste(file)
-        display.show_on_software(image)
+        display.show_on_hardware(image)
     return ('', 204)
 
 
