@@ -19,6 +19,7 @@ def upload_image():
         file = file.convert(mode="RGB", dither=False)
         image = Image.new('RGB', (212, 104), (0, 0, 0))  # 255: clear the frame
         image.paste(file)
+        image = image.transpose(method=Image.ROTATE_180)
         display.show_on_hardware(image)
     return ('', 204)
 
@@ -34,6 +35,7 @@ def upload_text():
         draw.fontmode = "1"  # Color mode bin / greyscale
         font = ImageFont.truetype("img/DOS437.ttf", size=text_size)
         draw.multiline_text((0, 0), text, font=font, fill=(0, 0, 0))
+        image = image.transpose(method=Image.ROTATE_180)
         display.show_on_hardware(image)
     return ('', 204)
 
