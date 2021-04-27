@@ -15,7 +15,7 @@ class TestDisplay(unittest.TestCase):
         image = Image.new('RGB', (212, 104), (255, 255, 255))  # 255: clear the frame
         draw = ImageDraw.Draw(image)
         draw.fontmode = "1"  # Color mode bin / greyscale
-        font = ImageFont.truetype("img/Perfect DOS VGA 437.ttf", 64)
+        font = ImageFont.truetype("../img/Perfect DOS VGA 437.ttf", 40)
         draw.text((10, 0), "Hello", font=font, fill=(255, 0, 0))
         draw.text((10, 50), "World", font=font, fill=(0, 0, 0))
 
@@ -32,7 +32,7 @@ class TestDisplay(unittest.TestCase):
 
         image = Image.new('RGB', (212, 104), (255, 255, 255))  # 255: clear the frame
         draw = ImageDraw.Draw(image)
-        font = ImageFont.truetype("img/Perfect DOS VGA 437.ttf", 40)
+        font = ImageFont.truetype("../img/Perfect DOS VGA 437.ttf", 40)
         draw.text((10, 10), "HELLO", font=font, fill=(255, 0, 0))
         draw.text((10, 50), "WORLD", font=font, fill=(0, 0, 0))
         display.show_on_software(image)
@@ -45,7 +45,7 @@ class TestDisplay(unittest.TestCase):
         image = Image.new('RGB', (212, 104), (255, 255, 255))  # 255: clear the frame
         draw = ImageDraw.Draw(image)
         draw.fontmode = "1"  # Color mode bin / greyscale
-        font = ImageFont.truetype("img/Perfect DOS VGA 437.ttf", 64)
+        font = ImageFont.truetype("../img/Perfect DOS VGA 437.ttf", 40)
         draw.text((10, 0), "Hello", font=font, fill=(255, 0, 0))
         draw.text((10, 50), "World", font=font, fill=(0, 0, 0))
         display.show_on_hardware(image)
