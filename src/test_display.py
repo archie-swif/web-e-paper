@@ -56,16 +56,16 @@ class TestDisplay(unittest.TestCase):
         display.show_on_hardware(image)
 
     def test_show_time(self):
-        from waveshare_epd import epd2in13bc
-        display = Display(epd2in13bc)
-        # display = Display()
+        # from waveshare_epd import epd2in13bc
+        # display = Display(epd2in13bc)
+        display = Display()
 
         image = Image.new('RGB', (212, 104), (0, 0, 0))  # 255: clear the frame
         draw = ImageDraw.Draw(image)
         draw.fontmode = "1"  # Color mode bin / greyscale
         font = ImageFont.truetype("../img/DOS437.ttf", 64)
-        draw.text((18, 18), datetime.now().strftime("%H:%M"), font=font, fill=(255, 255, 255))
-        draw.text((20, 20), datetime.now().strftime("%H:%M"), font=font, fill=(255, 0, 0))
-        image = image.transpose(method=Image.ROTATE_180)
-        display.show_on_hardware(image)
+        draw.text((19, 19), datetime.now().strftime("%H:%M"), font=font, fill=(255, 255, 255))
+        draw.text((20, 20), datetime.now().strftime("%H:%M"), font=font, fill=(0, 0, 0))
+        # image = image.transpose(method=Image.ROTATE_180)
+        image.show()
 

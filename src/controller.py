@@ -1,5 +1,5 @@
-from flask import Flask, request
 from PIL import Image
+from flask import Flask, request
 import io
 
 from display import Display
@@ -13,9 +13,11 @@ display = Display(epd7in5b_V2)
 def upload_image():
     if request.method == 'POST':
         image_bytes = request.get_data()
-        image = Image.open(io.BytesIO(image_bytes))
-        display.show_on_hardware(image)
-
+        file = Image.open(io.BytesIO(image_bytes))
+        file = file.convert(mode="RGB", dither=False)
+        image = Image.new('RGB', (212, 104), (0, 0, 0))  # 255: clear the frame
+        image.paste(file)
+        display.show_on_software(image)
     return ('', 204)
 
 
