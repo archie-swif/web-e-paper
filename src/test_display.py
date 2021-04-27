@@ -40,7 +40,7 @@ class TestDisplay(unittest.TestCase):
         display.show_on_software(image)
 
 
-def test_show_image_on_hardware(self):
+    def test_show_image_on_hardware(self):
         from waveshare_epd import epd2in13bc
         display = Display(epd2in13bc)
         # display = Display()
