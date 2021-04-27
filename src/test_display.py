@@ -1,5 +1,8 @@
 import logging
 
+import PIL.Image
+import numpy as np
+
 from display import Display
 from PIL import Image, ImageDraw, ImageFont
 
@@ -10,15 +13,18 @@ logger = logging.getLogger('Test')
 
 
 def test_image_split_by_color():
-    image = Image.new('1', (800, 480), (255, 255, 255))  # 255: clear the frame
+    image = Image.new('RGB', (212, 104), (255, 255, 255))  # 255: clear the frame
     draw = ImageDraw.Draw(image)
-    draw.line((140, 75, 190, 75), fill=0)
-    draw.arc((140, 50, 190, 100), 0, 360, fill=0)
-    draw.rectangle((80, 50, 130, 100), fill=(0, 0, 0))
-    draw.chord((200, 50, 250, 100), 0, 360, fill=(255, 0, 0))
+    draw.fontmode = "1"  # Color mode bin / greyscale
+    font = ImageFont.truetype("img/Perfect DOS VGA 437.ttf", 64)
+    draw.text((10, 0), "Hello", font=font, fill=(255, 0, 0))
+    draw.text((10, 50), "World", font=font, fill=(0, 0, 0))
+
+    image.transpose(method=Image.ROTATE_180)
 
     black, color = split_to_colors(image)
 
+    image.show()
     black.show()
     color.show()
 
@@ -26,10 +32,10 @@ def test_image_split_by_color():
 def test_show_image_on_software():
     display = Display()
 
-    image = Image.new('RGB', (800, 480), (255, 255, 255))  # 255: clear the frame
+    image = Image.new('RGB', (212, 104), (255, 255, 255))  # 255: clear the frame
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("img/Perfect DOS VGA 437.ttf", 40)
-    draw.text((10, 10), "Hello", font=font, fill=(255, 0, 0))
+    draw.text((10, 10), "HELLO", font=font, fill=(255, 0, 0))
     draw.text((10, 50), "WORLD", font=font, fill=(0, 0, 0))
     display.show_on_software(image)
 
@@ -39,9 +45,10 @@ def test_show_image_on_hardware():
     display = Display(epd2in13bc)
     # display = Display()
 
-    image = Image.new('RGB', (250, 122), (0, 0, 0))  # 255: clear the frame
-    image_draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("img/Perfect DOS VGA 437.ttf", 40)
-    image_draw.text((10, 10), "Hello", font=font, fill=(255, 0, 0))
-    image_draw.text((10, 50), "WORLD", font=font, fill=(255, 255, 255))
+    image = Image.new('RGB', (212, 104), (255, 255, 255))  # 255: clear the frame
+    draw = ImageDraw.Draw(image)
+    draw.fontmode = "1"  # Color mode bin / greyscale
+    font = ImageFont.truetype("img/Perfect DOS VGA 437.ttf", 64)
+    draw.text((10, 0), "Hello", font=font, fill=(255, 0, 0))
+    draw.text((10, 50), "World", font=font, fill=(0, 0, 0))
     display.show_on_hardware(image)
