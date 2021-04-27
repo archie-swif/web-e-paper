@@ -30,22 +30,27 @@ class TestDisplay(unittest.TestCase):
     def test_show_image_on_software(self):
         display = Display()
 
-        image = Image.new('RGB', (212, 104), (255, 255, 255))  # 255: clear the frame
+        image = Image.new('RGB', (212, 104), (0, 0, 0))  # 255: clear the frame
         draw = ImageDraw.Draw(image)
-        font = ImageFont.truetype("../img/DOS437.ttf", 40)
-        draw.text((10, 10), "HELLO", font=font, fill=(255, 0, 0))
-        draw.text((10, 50), "WORLD", font=font, fill=(0, 0, 0))
+        draw.fontmode = "1"  # Color mode bin / greyscale
+        font = ImageFont.truetype("../img/DOS437.ttf", 64)
+        draw.text((10, 0), "HELLO", font=font, fill=(255, 255, 255))
+        draw.text((10, 50), "WORLD", font=font, fill=(255, 0, 0))
+        # image = image.transpose(method=Image.ROTATE_180)
         display.show_on_software(image)
 
-    def test_show_image_on_hardware(self):
+
+def test_show_image_on_hardware(self):
         from waveshare_epd import epd2in13bc
         display = Display(epd2in13bc)
         # display = Display()
 
-        image = Image.new('RGB', (212, 104), (255, 255, 255))  # 255: clear the frame
+        image = Image.new('RGB', (212, 104), (0, 0, 0))  # 255: clear the frame
         draw = ImageDraw.Draw(image)
         draw.fontmode = "1"  # Color mode bin / greyscale
-        font = ImageFont.truetype("../img/DOS437.ttf", 40)
-        draw.text((10, 0), "Hello", font=font, fill=(255, 0, 0))
-        draw.text((10, 50), "World", font=font, fill=(0, 0, 0))
+        font = ImageFont.truetype("../img/DOS437.ttf", 64)
+        draw.text((10, 0), "HELLO", font=font, fill=(255, 255, 255))
+        draw.text((10, 50), "WORLD", font=font, fill=(255, 0, 0))
+        image = image.transpose(method=Image.ROTATE_180)
         display.show_on_hardware(image)
+
