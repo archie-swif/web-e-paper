@@ -20,7 +20,7 @@ def upload_image():
     if request.method == 'POST':
         file = Image.open(request.files['image'])
         file = file.convert(mode="RGB", dither=False)
-        image = Image.new('RGB', (800, 480), (0, 0, 0))  # 255: clear the frame
+        image = Image.new('RGB', (880, 528), (255, 255, 255))  # 255: clear the frame
         image.paste(file)
         image = image.transpose(method=Image.ROTATE_180)
         display.show_on_hardware(image)
@@ -36,8 +36,8 @@ def upload_text():
 
         draw = ImageDraw.Draw(image)
         draw.fontmode = "1"  # Color mode bin / greyscale
-        font = ImageFont.truetype("../img/VGA_8x16.ttf", size=text_size)
-        draw.multiline_text((0, 0), text, font=font, fill=(0, 0, 0))
+        font = ImageFont.truetype("img/VGA_8x16.ttf", size=text_size)
+        draw.multiline_text((0, 0), text, font=font, fill=(255, 0, 0))
         image = image.transpose(method=Image.ROTATE_180)
         display.show_on_hardware(image)
     return ('', 204)
