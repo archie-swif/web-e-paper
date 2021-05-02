@@ -5,11 +5,13 @@ import io
 from display import Display
 
 # from waveshare_epd import xepd2in13bc
-from waveshare_epd import epd7in5bc_V2
+from waveshare_epd import epd7in5b_HD
 
 app = Flask(__name__)
 # display = Display(epd2in13bc)
-display = Display(epd7in5bc_V2)
+display = Display(epd7in5b_HD)
+
+
 # display = Display()
 
 
