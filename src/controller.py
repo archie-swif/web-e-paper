@@ -5,11 +5,12 @@ import io
 from display import Display
 
 # from waveshare_epd import xepd2in13bc
+from waveshare_epd import epd7in5bc_V2
 
 app = Flask(__name__)
 # display = Display(epd2in13bc)
-# display = Display(epd7in5bc_V2)
-display = Display()
+display = Display(epd7in5bc_V2)
+# display = Display()
 
 
 @app.route('/image', methods=['POST'])
@@ -20,7 +21,7 @@ def upload_image():
         image = Image.new('RGB', (800, 480), (0, 0, 0))  # 255: clear the frame
         image.paste(file)
         image = image.transpose(method=Image.ROTATE_180)
-        display.show_on_software(image)
+        display.show_on_hardware(image)
     return ('', 204)
 
 
