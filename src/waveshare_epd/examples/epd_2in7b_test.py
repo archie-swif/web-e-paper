@@ -36,7 +36,6 @@ try:
     logging.info("1.Drawing on the Horizontal image...")
     HBlackimage = Image.new('1', (epd.height, epd.width), 255)  # 298*126
     HRedimage = Image.new('1', (epd.height, epd.width), 255)  # 298*126    
-    
     drawblack = ImageDraw.Draw(HBlackimage)
     drawred = ImageDraw.Draw(HRedimage)
     drawblack.text((10, 0), 'hello world', font = font24, fill = 0)
@@ -51,7 +50,7 @@ try:
     drawred.rectangle((80, 50, 130, 100), fill = 0)
     drawred.chord((200, 50, 250, 100), 0, 360, fill = 0)
     epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRedimage))
-    time.sleep(2)
+    time.sleep(20)
     
     # Drawing on the Vertical image
     logging.info("2.Drawing on the Vertical image...")
@@ -99,5 +98,5 @@ except IOError as e:
     
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
-    waveshare_epd.epdconfig.module_exit()
+    epd2in7b.epdconfig.module_exit()
     exit()

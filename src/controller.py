@@ -3,16 +3,12 @@ from flask import Flask, request
 import io
 
 from display import Display
-
-# from waveshare_epd import xepd2in13bc
 from waveshare_epd import epd7in5b_HD
 
 app = Flask(__name__)
 # display = Display(epd2in13bc)
-display = Display(epd7in5b_HD)
-
-
 # display = Display()
+display = Display(epd7in5b_HD)
 
 
 @app.route('/image', methods=['POST'])
@@ -32,7 +28,7 @@ def upload_text():
     if request.method == 'POST':
         text = request.data.decode("utf-8")
         text_size = int(request.args.get('size')) | 16
-        image = Image.new('RGB', (800, 480), (255, 255, 255))  # 255: clear the frame
+        image = Image.new('RGB', (880, 528), (255, 255, 255))  # 255: clear the frame
 
         draw = ImageDraw.Draw(image)
         draw.fontmode = "1"  # Color mode bin / greyscale

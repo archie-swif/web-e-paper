@@ -92,5 +92,5 @@ except IOError as e:
     
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
-    waveshare_epd.epdconfig.module_exit()
+    epd2in13bc.epdconfig.module_exit()
     exit()

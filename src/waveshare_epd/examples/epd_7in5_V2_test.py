@@ -16,8 +16,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 try:
     logging.info("epd7in5_V2 Demo")
-
     epd = epd7in5_V2.EPD()
+    
     logging.info("init and Clear")
     epd.init()
     epd.Clear()
@@ -85,5 +85,5 @@ except IOError as e:
     
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
-    epd7in5.epdconfig.module_exit()
+    waveshare_epd.epdconfig.module_exit()
     exit()

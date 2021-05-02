@@ -18,11 +18,12 @@ try:
     logging.info("epd7in5bc Demo")
     
     epd = epd7in5bc.EPD()
+
     logging.info("init and Clear")
     epd.init()
     epd.Clear()
     time.sleep(1)
-    
+
     # Drawing on the image
     logging.info("Drawing")    
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
@@ -96,5 +97,5 @@ except IOError as e:
     
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
-    waveshare_epd.epdconfig.module_exit()
+    epd7in5bc.epdconfig.module_exit()
     exit()

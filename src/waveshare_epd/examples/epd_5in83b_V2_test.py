@@ -8,16 +8,16 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 import logging
-from waveshare_epd import epd5in83bc
+from waveshare_epd import epd5in83b_V2
 import time
 from PIL import Image,ImageDraw,ImageFont
 
 logging.basicConfig(level=logging.DEBUG)
 
 try:
-    logging.info("epd5in83bc Demo")
+    logging.info("epd5in83b_V2 Demo")
     
-    epd = epd5in83bc.EPD()
+    epd = epd5in83b_V2.EPD()
     logging.info("init and Clear")
     epd.init()
     epd.Clear()
@@ -30,8 +30,8 @@ try:
     
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...") 
-    HBlackimage = Image.new('1', (epd.width, epd.height), 255)  # 298*126
-    HRYimage = Image.new('1', (epd.width, epd.height), 255)  # 298*126  ryimage: red or yellow image  
+    HBlackimage = Image.new('1', (epd.width, epd.height), 255)  # 648*480
+    HRYimage = Image.new('1', (epd.width, epd.height), 255)  # 648*480  HRYimage: red or yellow image  
     drawblack = ImageDraw.Draw(HBlackimage)
     drawry = ImageDraw.Draw(HRYimage)
     drawblack.text((10, 0), 'hello world', font = font24, fill = 0)
@@ -50,8 +50,8 @@ try:
     
     # Drawing on the Vertical image
     logging.info("2.Drawing on the Vertical image...")
-    LBlackimage = Image.new('1', (epd.height, epd.width), 255)  # 126*298
-    LRYimage = Image.new('1', (epd.height, epd.width), 255)  # 126*298
+    LBlackimage = Image.new('1', (epd.height, epd.width), 255)
+    LRYimage = Image.new('1', (epd.height, epd.width), 255)
     drawblack = ImageDraw.Draw(LBlackimage)
     drawry = ImageDraw.Draw(LRYimage)
     
@@ -70,14 +70,14 @@ try:
     time.sleep(2)
     
     logging.info("3.read bmp file")
-    HBlackimage = Image.open(os.path.join(picdir, '5in83bc-b.bmp'))
-    HRYimage = Image.open(os.path.join(picdir, '5in83bc-ry.bmp'))
+    HBlackimage = Image.open(os.path.join(picdir, '5in83b_V2_b.bmp'))
+    HRYimage = Image.open(os.path.join(picdir, '5in83b_V2_r.bmp'))
     epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRYimage))
     time.sleep(2)
     
     logging.info("4.read bmp file on window")
-    blackimage1 = Image.new('1', (epd.width, epd.height), 255)  # 298*126
-    redimage1 = Image.new('1', (epd.width, epd.height), 255)  # 298*126    
+    blackimage1 = Image.new('1', (epd.width, epd.height), 255)
+    redimage1 = Image.new('1', (epd.width, epd.height), 255)
     newimage = Image.open(os.path.join(picdir, '100x100.bmp'))
     blackimage1.paste(newimage, (50,10))    
     epd.display(epd.getbuffer(blackimage1), epd.getbuffer(redimage1))
@@ -94,5 +94,5 @@ except IOError as e:
     
 except KeyboardInterrupt:    
     logging.info("ctrl + c:")
-    epd5in83bc.epdconfig.module_exit()
+    waveshare_epd.epdconfig.module_exit()
     exit()

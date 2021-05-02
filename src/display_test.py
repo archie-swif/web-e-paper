@@ -3,8 +3,6 @@ import logging
 from display import Display
 from PIL import Image, ImageDraw, ImageFont
 
-from image_tools import split_to_colors
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('Test')
 
