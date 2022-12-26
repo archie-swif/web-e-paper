@@ -1,13 +1,40 @@
-<html><head></head><body>
-  <h1>eInk</h1>
-  <form action="/image" method="post" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="submit" value="Upload">
-  </form>
-  <br/>
-  <form action="/text?size=32" method="post" enctype="multipart/form-data">
-    <textarea id="text" name="text" rows="12" cols="35"></textarea>
-    <br/>
-    <input type="submit" value="Upload">
-  </form>
+<html>
+  <head>
+    <style>  
+      @font-face {
+        font-family: 'vga';
+        src: url({{url_for('static', filename='vga.woff2')}}) format('woff2'), url({{url_for('static', filename='vga.woff')}}) format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      .parent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .textarea{
+        background-color: #d13030;
+        font-size: 32;
+        color: #e7e7e7;
+        font-family: "vga";
+        text-shadow: 2px 2px black;
+      }
+    </style>
+  </head>
+
+<body>
+  <div class="parent">
+    <div class="child">
+      <form action="/text?size=32" method="post" enctype="multipart/form-data">
+        <textarea class="textarea" id="text" name="text" rows="13" cols="36"></textarea>
+        <br/>
+        <input type="submit" value="Upload">
+      </form>
+      <form action="/image" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+      </form>
+    </div>
+  </div>
 </body></html>
