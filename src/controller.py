@@ -37,7 +37,7 @@ def upload_text():
 
         draw = ImageDraw.Draw(image)
         draw.fontmode = "1"  # Color mode bin / greyscale
-        font = ImageFont.truetype("img/Px437_IBM_VGA_8x16.ttf", size=text_size)
+        font = ImageFont.truetype("img/PxPlus_IBM_VGA_8x16.ttf", size=text_size)
         draw.multiline_text((2, 2), text, font=font, fill=(0, 0, 0))
         draw.multiline_text((0, 0), text, font=font, fill=(255, 255, 255))
         image = image.transpose(method=Image.ROTATE_180)
