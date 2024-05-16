@@ -12,6 +12,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 100%;
       }
       .textarea{
         background-color: #d13030;
@@ -27,7 +28,7 @@
   <div class="parent">
     <div class="child">
       <form action="/text?size=32" method="post" enctype="multipart/form-data">
-        <textarea class="textarea" id="text" name="text" rows="13" cols="36"></textarea>
+        <textarea class="textarea" id="text" name="text" rows="13" cols="36">{{text}}</textarea>
         <br/>
         <input type="submit" value="Upload">
       </form>
