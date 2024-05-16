@@ -9,11 +9,12 @@ app = Flask(__name__)
 # display = Display(epd2in13bc)
 # display = Display()
 display = Display(epd7in5b_HD)
+text = ''
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', text=text)
 
 @app.route('/image', methods=['POST'])
 def upload_image():
@@ -29,9 +30,10 @@ def upload_image():
 
 @app.route('/text', methods=['POST'])
 def upload_text():
+    global text
     if request.method == 'POST':
         text = request.form['text'].replace('\r','')
-        print(repr(text))
+        print(text)
         text_size = int(request.values.get('size'))| 16
         image = Image.new('RGB', (880, 528), (255, 0, 0))  # 255: clear the frame
 
