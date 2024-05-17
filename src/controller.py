@@ -20,9 +20,8 @@ def index():
 
 
 @app.route('/image', methods=['GET'])
-def index():
+def image():
     return render_template('image.html', text=text)
-
 
 @app.route('/image', methods=['POST'])
 def upload_image():
