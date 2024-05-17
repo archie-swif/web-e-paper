@@ -1,3 +1,5 @@
+import base64
+
 from PIL import Image, ImageDraw, ImageFont
 from flask import Flask, request, render_template
 import io
@@ -16,35 +18,36 @@ text = ''
 def index():
     return render_template('index.html', text=text)
 
-@app.route('/image',  methods=['GET'])
+
+@app.route('/image', methods=['GET'])
 def index():
     return render_template('image.html', text=text)
 
+
 @app.route('/image', methods=['POST'])
 def upload_image():
-    if request.method == 'POST':
-        file = Image.open(request.files['image'])
-        file = file.convert(mode="RGB", dither=False)
-        image = Image.new('RGB', (880, 528), (255, 255, 255))  # 255: clear the frame
-        image.paste(file)
-        # image = image.transpose(method=Image.ROTATE_180)
-        display.show_on_hardware(image)
+    file = Image.open(request.files['image'])
+    file = file.convert(mode="RGB", dither=False)
+    image = Image.new('RGB', (880, 528), (255, 255, 255))  # 255: clear the frame
+    image.paste(file)
+    # image = image.transpose(method=Image.ROTATE_180)
+    display.show_on_hardware(image)
 
-        with BytesIO() as buf:
-            image.save(buf, 'png')
-            image_bytes = buf.getvalue()
-        encoded_string = base64.b64encode(image_bytes).decode()
+    with io.BytesIO() as buf:
+        image.save(buf, 'png')
+        image_bytes = buf.getvalue()
+    encoded_string = base64.b64encode(image_bytes).decode()
 
-    return ('image.html', img_data=encoded_string, 200)
+    return render_template('image.html', img_data=encoded_string), 200
 
 
 @app.route('/text', methods=['POST'])
 def upload_text():
     global text
     if request.method == 'POST':
-        text = request.form['text'].replace('\r','')
+        text = request.form['text'].replace('\r', '')
         print(text)
-        text_size = int(request.values.get('size'))| 16
+        text_size = int(request.values.get('size')) | 16
         image = Image.new('RGB', (880, 528), (255, 0, 0))  # 255: clear the frame
 
         draw = ImageDraw.Draw(image)
