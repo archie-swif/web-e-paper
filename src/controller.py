@@ -29,7 +29,9 @@ def image():
 @app.route('/image', methods=['POST'])
 def upload_image():
     global image_data
-    file = Image.open(request.files['image'])
+    file = request.files['image'] | request.files['photo']
+    file = Image.open(file)
+
     file = file.convert(mode="RGB", dither=False)
     file.thumbnail((528, 880), resample=Image.BICUBIC, reducing_gap=2.0)
     image = Image.new('RGB', (528, 880), (255, 255, 255))  # 255: clear the frame

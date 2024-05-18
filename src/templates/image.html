@@ -1,6 +1,6 @@
 <html>
   <head>
-    <style>  
+    <style>
       @font-face {
         font-family: 'vga';
         src: url({{url_for('static', filename='vga.ttf')}}) format('truetype');
@@ -29,8 +29,8 @@
     <div class="child">
       <img src="data:image/jpeg;base64,{{ image_data }}">
       <form action="/image" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*" capture="environment" />
-<!--        <input type="file" name="image">-->
+        <input type="file" name="image">
+        <br/>
         <input type="submit" value="Upload">
       </form>
     </div>
