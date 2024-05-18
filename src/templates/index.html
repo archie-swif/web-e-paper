@@ -3,7 +3,7 @@
     <style>
         @font-face {
         font-family: 'vga';
-        src: url({{url_for('static', filename='vga.woff2')}}) format('woff2'), url({{url_for('static', filename='vga.woff')}}) format('woff');
+        src: url({{url_for('static', filename='vga.ttf')}}) format('truetype');
         font-weight: normal;
         font-style: normal;
       }
@@ -28,7 +28,7 @@
   <div class="parent">
       <div class="child">
           <form action="/text?size=32" method="post" enctype="multipart/form-data">
-              <textarea class="textarea" id="text" name="text" rows="13" cols="36">{{text}}</textarea>
+              <textarea class="textarea" id="text" name="text" rows="19" cols="19">{{text}}</textarea>
               <br/>
               <input type="submit" value="Upload">
           </form>

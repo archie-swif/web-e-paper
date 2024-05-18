@@ -1,8 +1,9 @@
 import base64
+import io
+import logging
 
 from PIL import Image, ImageDraw, ImageFont
-from flask import Flask, request, render_template
-import io
+from flask import Flask, request, render_template, redirect, url_for
 
 from display import Display
 from waveshare_epd import epd7in5b_HD
@@ -12,6 +13,7 @@ app = Flask(__name__)
 # display = Display()
 display = Display(epd7in5b_HD)
 text = ''
+image_data = ''
 
 
 @app.route('/')
@@ -21,23 +23,26 @@ def index():
 
 @app.route('/image', methods=['GET'])
 def image():
-    return render_template('image.html', text=text)
+    return render_template('image.html', image_data=image_data)
+
 
 @app.route('/image', methods=['POST'])
 def upload_image():
+    global image_data
     file = Image.open(request.files['image'])
     file = file.convert(mode="RGB", dither=False)
-    image = Image.new('RGB', (880, 528), (255, 255, 255))  # 255: clear the frame
+    file.thumbnail((528, 880), resample=Image.BICUBIC, reducing_gap=2.0)
+    image = Image.new('RGB', (528, 880), (255, 255, 255))  # 255: clear the frame
     image.paste(file)
-    # image = image.transpose(method=Image.ROTATE_180)
-    display.show_on_hardware(image)
 
     with io.BytesIO() as buf:
         image.save(buf, 'png')
         image_bytes = buf.getvalue()
-    encoded_string = base64.b64encode(image_bytes).decode()
+    image_data = base64.b64encode(image_bytes).decode()
 
-    return render_template('image.html', img_data=encoded_string), 200
+    image = image.transpose(method=Image.ROTATE_180)
+    display.show_on_hardware(image)
+    return redirect(url_for('image'))
 
 
 @app.route('/text', methods=['POST'])
@@ -45,19 +50,19 @@ def upload_text():
     global text
     if request.method == 'POST':
         text = request.form['text'].replace('\r', '')
-        print(text)
+        logging.info(text)
         text_size = int(request.values.get('size')) | 16
-        image = Image.new('RGB', (880, 528), (255, 0, 0))  # 255: clear the frame
+        image = Image.new('RGB', (528, 880), (255, 0, 0))  # 255: clear the frame
 
         draw = ImageDraw.Draw(image)
         draw.fontmode = "1"  # Color mode bin / greyscale
-        font = ImageFont.truetype("img/PxPlus_IBM_VGA_8x16.ttf", size=text_size)
+        font = ImageFont.truetype("./src/static/vga.ttf", size=text_size)
         draw.multiline_text((2, 2), text, font=font, fill=(0, 0, 0))
         draw.multiline_text((0, 0), text, font=font, fill=(255, 255, 255))
         image = image.transpose(method=Image.ROTATE_180)
         display.show_on_hardware(image)
-    return ('', 204)
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="0.0.0.0", port=80, debug=True)

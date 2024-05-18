@@ -3,7 +3,7 @@
     <style>  
       @font-face {
         font-family: 'vga';
-        src: url({{url_for('static', filename='vga.woff2')}}) format('woff2'), url({{url_for('static', filename='vga.woff')}}) format('woff');
+        src: url({{url_for('static', filename='vga.ttf')}}) format('truetype');
         font-weight: normal;
         font-style: normal;
       }
@@ -27,9 +27,10 @@
 <body>
   <div class="parent">
     <div class="child">
-      <img src="data:image/jpeg;base64,{{ img_data }}">
+      <img src="data:image/jpeg;base64,{{ image_data }}">
       <form action="/image" method="post" enctype="multipart/form-data">
-        <input type="file" name="image">
+        <input type="file" name="image" accept="image/*" capture="environment" />
+<!--        <input type="file" name="image">-->
         <input type="submit" value="Upload">
       </form>
     </div>
