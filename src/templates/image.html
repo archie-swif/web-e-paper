@@ -1,6 +1,7 @@
 <html>
   <head>
-    <style>  
+    <script src="{{url_for('static', filename='dither.js')}}"></script>
+    <style>
       @font-face {
         font-family: 'vga';
         src: url({{url_for('static', filename='vga.ttf')}}) format('truetype');
@@ -27,10 +28,10 @@
 <body>
   <div class="parent">
     <div class="child">
-      <img src="data:image/jpeg;base64,{{ image_data }}">
+      <img src="{{ image_data }}" height="880" width="528">
       <form action="/image" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*" capture="environment" />
-<!--        <input type="file" name="image">-->
+        <input type="file" name="image">
+        <br/>
         <input type="submit" value="Upload">
       </form>
     </div>

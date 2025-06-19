@@ -13,7 +13,7 @@ app = Flask(__name__)
 # display = Display()
 display = Display(epd7in5b_HD)
 text = ''
-image_data = ''
+image_data = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
 
 
 @app.route('/')
@@ -29,16 +29,28 @@ def image():
 @app.route('/image', methods=['POST'])
 def upload_image():
     global image_data
-    file = Image.open(request.files['image'])
+    file = request.files['image']
+    file = Image.open(file)
+
+    PALETTE = [
+                  0, 0, 0,  # black,  00
+                  128, 28, 28,  # red,    10
+                  255, 255, 255,  # yellow, 11
+              ] + [0, ] * 252 * 3
+    pimage = Image.new("P", (1, 1), 0)
+    pimage.putpalette(PALETTE)
+
+
     file = file.convert(mode="RGB", dither=False)
     file.thumbnail((528, 880), resample=Image.BICUBIC, reducing_gap=2.0)
+    # file = file.quantize(palette=pimage, dither=Image.FLOYDSTEINBERG)
     image = Image.new('RGB', (528, 880), (255, 255, 255))  # 255: clear the frame
     image.paste(file)
 
     with io.BytesIO() as buf:
         image.save(buf, 'png')
         image_bytes = buf.getvalue()
-    image_data = base64.b64encode(image_bytes).decode()
+    image_data = "data:image/jpeg;base64,"+base64.b64encode(image_bytes).decode()
 
     image = image.transpose(method=Image.ROTATE_180)
     display.show_on_hardware(image)
@@ -59,7 +71,7 @@ def upload_text():
         font = ImageFont.truetype("./src/static/vga.ttf", size=text_size)
         draw.multiline_text((2, 2), text, font=font, fill=(0, 0, 0))
         draw.multiline_text((0, 0), text, font=font, fill=(255, 255, 255))
-        image = image.transpose(method=Image.ROTATE_180)
+        #image = image.transpose(method=Image.ROTATE_180)
         display.show_on_hardware(image)
     return redirect(url_for('index'))
 
