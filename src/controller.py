@@ -40,7 +40,6 @@ def upload_image():
     pimage = Image.new("P", (1, 1), 0)
     pimage.putpalette(PALETTE)
 
-
     file = file.convert(mode="RGB", dither=False)
     file.thumbnail((528, 880), resample=Image.BICUBIC, reducing_gap=2.0)
     # file = file.quantize(palette=pimage, dither=Image.FLOYDSTEINBERG)
